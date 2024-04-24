@@ -21,12 +21,8 @@ if jq '.commits[].message, .head_commit.message' < $EVENT_PATH | grep -i -q "$*"
 then
     # do something
     VERSION=$(date +%F.%s)
-
-    DATA="$(printf '{"tag_name":"v%s",' $VERSION)"
-    DATA="${DATA} $(printf '"target_commitish":"main",')"
-    DATA="${DATA} $(printf '"name":"v%s",' $VERSION)"
-    DATA="${DATA} $(printf '"body":"Automated release based on keyword: %s",' "$*")"
-    DATA="${DATA} $(printf '"draft":false, "prerelease":false}')"
+    
+    DATA="$(printf 'tag_name="%s" target_commitish="main" name="%s" body="Automated release based on keyword: %s" draft=false prerelease=false' $VERSION, $VERSION, $*)"
 
     URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 
@@ -34,9 +30,9 @@ then
     then
         echo "## [TESTING] Keyword was found but no release was created."
     else
-        echo $DATA | http POST $URL Authorization:${GITHUB_TOKEN} Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 | jq .
+        echo http POST $URL Authorization:${GITHUB_TOKEN} Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 ${DATA} | jq .
     fi
-    echo ${URL}
+    echo ${DATA}
 # otherwise
 else
     # exit gracefully
