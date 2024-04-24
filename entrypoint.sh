@@ -34,9 +34,9 @@ then
     then
         echo "## [TESTING] Keyword was found but no release was created."
     else
-        echo ${URL}
         echo $DATA | http POST $URL Authorization:${GITHUB_TOKEN} Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 | jq .
     fi
+    echo ${URL}
 # otherwise
 else
     # exit gracefully
