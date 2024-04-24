@@ -23,7 +23,7 @@ then
     VERSION=$(date +%F.%s)
 
     DATA="$(printf '{"tag_name":"v%s",' $VERSION)"
-    DATA="${DATA} $(printf '"target_commitish":"master",')"
+    DATA="${DATA} $(printf '"target_commitish":"main",')"
     DATA="${DATA} $(printf '"name":"v%s",' $VERSION)"
     DATA="${DATA} $(printf '"body":"Automated release based on keyword: %s",' "$*")"
     DATA="${DATA} $(printf '"draft":false, "prerelease":false}')"
@@ -34,7 +34,7 @@ then
     then
         echo "## [TESTING] Keyword was found but no release was created."
     else
-        echo $DATA | http POST $URL Authorization:${GITHUB_TOKEN} | jq .
+        echo $DATA | http POST $URL Authorization: Bearer ${GITHUB_TOKEN} | jq .
     fi
 # otherwise
 else
