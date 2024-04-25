@@ -36,7 +36,7 @@ then
     echo ${DATA} | http POST $URL \
         Authorization:${GITHUB_TOKEN} \
         Accept:application/vnd.github+json \
-        X-GitHub-Api-Version:2022-11-28
+        X-GitHub-Api-Version:2022-11-28 -v
 # otherwise
 else
     # exit gracefully
