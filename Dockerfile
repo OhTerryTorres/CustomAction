@@ -2,7 +2,7 @@ FROM alpine
 
 RUN apk add --no-cache \
         bash           \
-        httpie         \
+        curl           \
         jq &&          \
         which bash &&  \
         which http &&  \
