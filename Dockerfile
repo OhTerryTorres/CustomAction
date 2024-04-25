@@ -2,10 +2,10 @@ FROM alpine
 
 RUN apk add --no-cache \
         bash           \
-        curl           \
+        curl         \
         jq &&          \
         which bash &&  \
-        which http &&  \
+        which curl &&  \
         which jq
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

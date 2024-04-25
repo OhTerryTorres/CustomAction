@@ -26,7 +26,7 @@ then
 
     URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 
-    curl -L \
+    curl -L -k \
         -X POST \
         -H "Accept: application/vnd.github+json" \
         -H "Authorization: Bearer ${GITHUB_TOKEN}" \
