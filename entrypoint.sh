@@ -32,8 +32,14 @@ then
 
     URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 
-    echo ${DATA} | http POST $URL \
-        Authorization:"Bearer ${GITHUB_TOKEN}" Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 -v
+        if [[ "${LOCAL_TEST}" == *"true"* ]];
+    then
+        echo "## [TESTING] Keyword was found but no release was created."
+    else
+        echo ${DATA} | http POST $URL \
+            Authorization:"Bearer ${GITHUB_TOKEN}" Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 -v
+    fi
+
 # otherwise
 else
     # exit gracefully
