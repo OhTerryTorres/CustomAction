@@ -22,17 +22,17 @@ then
     # do something
     VERSION=$(date +%F.%s)
     
-    DATA="$(printf 'tag_name="%s" target_commitish="main" name="%s" body="Automated release based on keyword: %s" draft=false prerelease=false' $VERSION, $VERSION, $*)"
+    DATA="$(printf 'tag_name="%s" target_commitish="main" name="%s" body="An automated release based on keyword: %s" draft=false prerelease=false' $VERSION, $VERSION, $*)"
 
     URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 
-    if [[ "${LOCAL_TEST}" == *"true"* ]];
-    then
-        echo "## [TESTING] Keyword was found but no release was created."
-    else
-        echo http POST $URL Authorization:${GITHUB_TOKEN} Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 ${DATA} | jq .
-    fi
-    echo ${DATA}
+    curl -L \
+        -X POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        ${URL} \
+        -d "$(printf '{"tag_name":"v%s","target_commitish":"main","name":"%s","body":"An automated release based on keyword: %s","draft":false,"prerelease":false,"generate_release_notes":false}' $VERSION, $VERSION, $*)"
 # otherwise
 else
     # exit gracefully
