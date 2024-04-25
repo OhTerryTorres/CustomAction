@@ -33,7 +33,10 @@ then
     URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 
     http POST $URL Authorization:${GITHUB_TOKEN} Accept:application/vnd.github+json X-GitHub-Api-Version:2022-11-28 ${DATA}
-    echo ${DATA}
+    echo ${DATA} | http POST $URL \
+        Authorization:${GITHUB_TOKEN} \
+        Accept:application/vnd.github+json \
+        X-GitHub-Api-Version:2022-11-28
 # otherwise
 else
     # exit gracefully
